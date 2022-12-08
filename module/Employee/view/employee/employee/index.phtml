@@ -1,0 +1,39 @@
+<?php
+
+$title = 'Сотрудники';
+$this->headTitle($title);
+?>
+
+<div class="employee-heading">
+    <div><?= $this->escapeHtml($title) ?></div>
+    <div style="margin-left: 1rem;"><a href="<?= $this->url('employee', ['action' => 'add']) ?>">добавить сотрудника</a></div>
+</div>
+
+<div class="employees">
+    <table class="table" style="width: 100%;">
+        <tr>
+            <th></th>
+            <th>ФИО</th>
+            <th>Дата рождения</th>
+            <th>Место рождения</th>
+            <th>Действия</th>
+        </tr>
+        <?php foreach ($employees as $employee) : ?>
+            <tr>
+                <td>
+                    <div class="avatar">
+                        <img class="avatar" src="<?= "https://i.pravatar.cc/50?u=". $employee->id ?>" alt="">
+                    </div>
+
+                </td>
+                <td><?= $this->escapeHtml($employee->name) ?></td>
+                <td style="text-align: center;"><?= $this->escapeHtml($employee->birthdate) ?></td>
+                <td style="text-align: center;"></td>
+                <td style="text-align: center;">
+                    <a href="<?= $this->url('employee', ['action' => 'edit', 'id' => $employee->id]) ?>">Редактировать</a>
+                    <a href="<?= $this->url('employee', ['action' => 'delete', 'id' => $employee->id]) ?>">Удалить</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
