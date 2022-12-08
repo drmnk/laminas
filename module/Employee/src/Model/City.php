@@ -1,19 +1,42 @@
 <?php
 
-// Разумеется, понятно, что место рождения как бы не относится
-// к Модулю
 namespace Employee\Model;
 
+use Laminas\Db\Adapter\Adapter;
+use Laminas\Db\TableGateway\TableGateway;
+
+
+// Конечно, модель города здесь не место, в модуле Сотрудника
+// Но в этом тестовом задании она вряд ли будет использоваться где-то ещё,
+// а best practices по использованию общих моделей в Ламинас мне пока не ясны
 class City
 {
-    public int $id;
-    public string $name;
-    public string $state;
-
-    public function exchangeArray(array $data)
+    public static function fetchAll()
     {
-        $this->id = $data['id'] ?? null;
-        $this->name = $data['name'] ?? null;
-        $this->state = $data['state'] ?? null;
+        $adapter = new Adapter([
+            'driver' => 'Pdo',
+            'dsn' => sprintf('sqlite:%s/data/departments.db', realpath(getcwd()))
+        ]);
+
+        $table = new TableGateway('cities', $adapter);
+        return $table->select();
     }
+
+    public static function getArray()
+    {
+        $adapter = new Adapter([
+            'driver' => 'Pdo',
+            'dsn' => sprintf('sqlite:%s/data/departments.db', realpath(getcwd()))
+        ]);
+
+        $table = new TableGateway('cities', $adapter);
+        $objCities = $table->select();
+        $cities = [];
+        foreach ($objCities as $objCity) {
+            $cities[$objCity->id] = "{$objCity->name}, {$objCity->state}";
+        }
+        return $cities;
+    }
+
+
 }

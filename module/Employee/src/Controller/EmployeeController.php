@@ -6,9 +6,14 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Employee\Model\EmployeeTable;
 
+use Employee\Model\City;
+
+
+
 class EmployeeController extends AbstractActionController
 {
     private $table;
+    private $adapter;
 
     public function __construct(EmployeeTable $table)
     {
@@ -17,8 +22,10 @@ class EmployeeController extends AbstractActionController
     public function indexAction()
     {
         $employees = $this->table->fetchAll();
+
         return new ViewModel([
-            'employees' => $employees
+            'employees' => $employees,
+            'places' => City::getArray()
         ]);
     }
 

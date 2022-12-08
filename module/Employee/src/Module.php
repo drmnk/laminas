@@ -28,6 +28,16 @@ class Module implements ConfigProviderInterface
                     $resultSetPrototype->setArrayObjectPrototype(new Model\Employee());
                     return new TableGateway('employees', $dbAdapter, null, $resultSetPrototype);
                 },
+                Model\CityTable::class => function($container) {
+                    $tableGateway = $container->get(Model\CityTableGateway::class);
+                    return new Model\EmployeeTable($tableGateway);
+                },
+                Model\CityTableGateway::class => function ($container) {
+                    $dbAdapter = $container->get(AdapterInterface::class);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Model\City());
+                    return new TableGateway('cities', $dbAdapter, null, $resultSetPrototype);
+                },
             ],
         ];
     }

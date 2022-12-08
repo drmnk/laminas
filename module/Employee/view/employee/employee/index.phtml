@@ -28,7 +28,9 @@ $this->headTitle($title);
                 </td>
                 <td><?= $this->escapeHtml($employee->name) ?></td>
                 <td style="text-align: center;"><?= $this->escapeHtml($employee->birthdate) ?></td>
-                <td style="text-align: center;"></td>
+                <td style="text-align: center;">
+                    <?= $places[$employee->birthplace_id] ?>
+                </td>
                 <td style="text-align: center;">
                     <a href="<?= $this->url('employee', ['action' => 'edit', 'id' => $employee->id]) ?>">Редактировать</a>
                     <a href="<?= $this->url('employee', ['action' => 'delete', 'id' => $employee->id]) ?>">Удалить</a>
