@@ -23,9 +23,11 @@ class EmployeeController extends AbstractActionController
     {
         $employees = $this->table->fetchAll();
 
+        $city = new City();
+
         return new ViewModel([
             'employees' => $employees,
-            'places' => City::getArray()
+            'places' => $city->getArray()
         ]);
     }
 
